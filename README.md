@@ -1,4 +1,9 @@
-# retort.ai — Browser Extension
+<!-- Add a demo GIF here. Place the file at `public/retortai.gif` -->
+<p align="center">
+	<img src="public/retortai.gif" alt="retortai demo" width="600" />
+</p>
+
+# retortai — Browser Extension
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
