@@ -7,8 +7,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-  "lint": "eslint .",
-  "ci:lint": "eslint . --ext .js,.jsx",
+    "lint": "eslint .",
+    "ci:lint": "eslint . --ext .js,.jsx",
+    "package": "npm run build && zip -r extension.zip dist/",
     "preview": "vite preview"
   },
   "dependencies": {
