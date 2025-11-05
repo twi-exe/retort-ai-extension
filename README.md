@@ -1,8 +1,3 @@
-<!-- Add a demo GIF here. Place the file at `public/retortai.gif` -->
-<p align="center">
-	<img src="retortai.gif" alt="retortai demo" width="600" />
-</p>
-
 # retortai — Browser Extension
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -10,6 +5,10 @@
 A lightweight Chrome/Edge extension that helps generate context-aware replies using OpenRouter (or other LLM providers). It extracts selected text or visible page content and sends it to an AI model to produce suggested replies you can copy to the clipboard.
 
 This repo contains a small React popup, a background script that provides a context menu entry, and a content script to extract text from web pages.
+
+<p align="center">
+	<img src="retortai.gif" alt="retortai demo" width="600" />
+</p>
 
 ## Features
 
