@@ -27,16 +27,22 @@ jobs:
       - name: Build and package extension
         run: npm run package
 
+      - name: Compute release tag
+        id: compute_tag
+        run: |
+          # prefer explicit input tag when provided via workflow_dispatch
+          if [ -n "${{ github.event.inputs.tag || '' }}" ]; then
+            echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=release-${GITHUB_SHA}" >> $GITHUB_OUTPUT
+          fi
+
       - name: Create or update GitHub Release
         id: create_release
         uses: ncipollo/release-action@v1
         with:
           # prefer an explicit tag input for manual runs, otherwise use a deterministic tag
-          tag: ${{ github.event.inputs.tag != '' && github.event.inputs.tag || format('release-{0}', github.sha) }}
-          name: ${{ github.event.inputs.tag != '' && github.event.inputs.tag || format('Release {0}', github.sha) }}
+          tag: ${{ steps.compute_tag.outputs.tag }}
+          name: ${{ steps.compute_tag.outputs.tag }}
           body: "Automated build: ${{ github.sha }}"
-
-      - name: Upload extension.zip to release
-        uses: ncipollo/release-action@v1
-        with:
-          files: extension.zip
+          artifacts: extension.zip
