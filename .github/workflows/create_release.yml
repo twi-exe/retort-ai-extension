@@ -1,7 +1,11 @@
 name: Create Release Artifact
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag name to create release for (e.g. v0.1.0)'
+        required: true
   push:
     branches: [ main ]
 
@@ -34,4 +38,5 @@ jobs:
       - name: Upload extension.zip to release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
           files: extension.zip
