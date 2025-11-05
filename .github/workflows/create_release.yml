@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag name to create release for (e.g. v0.1.0)'
-        required: true
+        description: 'Tag name to create release for (e.g. v0.1.3). If empty, a tag release-<sha> will be used.'
+        required: false
   push:
     branches: [ main ]
 
@@ -27,16 +27,16 @@ jobs:
       - name: Build and package extension
         run: npm run package
 
-      - name: Create GitHub Release
+      - name: Create or update GitHub Release
         id: create_release
         uses: ncipollo/release-action@v1
         with:
-          tag: release-${{ github.sha }}
-          name: Release ${{ github.sha }}
+          # prefer an explicit tag input for manual runs, otherwise use a deterministic tag
+          tag: ${{ github.event.inputs.tag != '' && github.event.inputs.tag || format('release-{0}', github.sha) }}
+          name: ${{ github.event.inputs.tag != '' && github.event.inputs.tag || format('Release {0}', github.sha) }}
           body: "Automated build: ${{ github.sha }}"
 
       - name: Upload extension.zip to release
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
           files: extension.zip
